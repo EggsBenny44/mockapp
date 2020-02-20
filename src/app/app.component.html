@@ -1,0 +1,41 @@
+
+<!-- header -->
+<app-header></app-header>
+<mat-sidenav-container class="sidenav">
+  <mat-sidenav #sidenav opened>
+    <mat-nav-list>
+        <mat-list-item [matMenuTriggerFor]="menu">
+          <mat-icon>create</mat-icon>
+          <a matline><span style="padding: 0 20px">Draft</span></a>
+        </mat-list-item>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/appform', 1, 1]">
+            <mat-icon>person_add</mat-icon>
+            <span>Create Account</span>
+          </button>
+          <button mat-menu-item [routerLink]="['/appform', 2, 1]">
+            <mat-icon>how_to_reg</mat-icon>
+            <span>Change Permission</span>
+          </button>
+          <button mat-menu-item [routerLink]="['/appform', 3, 1]">
+            <mat-icon>person_outline</mat-icon>
+            <span>Deactivate Account</span>
+          </button>
+        </mat-menu>
+      <a mat-list-item [routerLink]="['/listform', 1]">
+        <mat-icon>done</mat-icon>
+        <span style="padding: 0 20px">Approve</span>
+      </a>
+      <a mat-list-item [routerLink]="['/listform', 2]">
+        <mat-icon>list_alt</mat-icon>
+        <span style="padding: 0 20px">Review</span>
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

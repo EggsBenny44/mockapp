@@ -1,0 +1,18 @@
+<!-- Title: Requested Permissions -->
+<form *ngIf="!isLoading" [formGroup]="permissionForm" novalidate>
+  <div class="sub-title"><ul><li>Requested Permissions</li></ul></div>
+  <section class="permission">
+      <div style="display: grid;grid-template-columns: repeat(3,200px);">
+       <div  *ngFor="let n of permissionsData; let i = index" formArrayName="permissions" [ngClass]="{'read-only': isReadOnly}">
+
+
+
+          <mat-checkbox color="primary"  value="n.roleID" [checked]="n.status">{{n.name}}</mat-checkbox>
+          <mat-icon *ngIf="n.current" matSuffix color="primary" class="material-icons" style="margin-left: 5px;font-size: 20px;" matTooltip="Current Permission">check_circle_outline</mat-icon>
+</div>
+        <!--
+        <mat-error *ngIf="permissionForm.getFormArray['permissions'].hasError('Validators.requiredTrue')">At least one required</mat-error>
+        -->
+      </div>
+  </section>
+</form>

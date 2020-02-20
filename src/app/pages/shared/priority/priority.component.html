@@ -1,0 +1,11 @@
+<form [formGroup]="priorityForm" novalidate>
+    <div class="toggle-buttons">
+      <ng-container *ngFor="let p of priorities; let i = index">
+        <label>
+          <input type="radio" name="priority" (change)="priority=p" formControlName="priority" value="{{p}}" formControlName="priority">
+          <span class="button" >{{p}}</span>
+        </label>
+      </ng-container>
+  </div>
+</form>
+

@@ -1,0 +1,49 @@
+.contents {
+  padding: 20px 100px;
+  display: flex;
+  flex-flow: column;
+  position: relative;
+  width: 80%;
+}
+.title {
+  order:1;
+  display: flex;
+  flex-flow: row;
+  justify-items: center;
+  color: #878787;
+  position:relative;
+  height:50px;
+}
+.title-icon {
+  font-size: 2rem;
+  padding-right: 20px;
+}
+.priority {
+  order:2;
+  position:relative;
+}
+.account {
+  order:3;
+  padding-top: 10px;
+  position:relative;
+}
+
+.permission {
+  order:4;
+  position:relative;
+}
+
+.comment {
+  order:5;
+  padding-top: 10px;
+  position:relative;
+}
+
+.submission {
+  order:6;
+  display: flex;
+  padding-top: 10px;
+  align-items: center;
+  justify-content: center;
+  position:relative;
+}

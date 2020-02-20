@@ -1,0 +1,28 @@
+label {
+  width: 300px;
+}
+
+.full-width {
+  width: 43%;
+}
+.name-width {
+  width: 50%;
+}
+
+.sname-width {
+  width: 20%;
+  padding-right: 10px;
+}
+
+
+.deactive {
+  color: rgba(0, 0, 0, 0.26);
+}
+
+.input-area > * {
+  width: 100%;
+}
+
+.read-only-date {
+  color:black;
+}

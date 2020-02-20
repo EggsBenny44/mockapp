@@ -1,0 +1,120 @@
+<!-- Title: Basic Information -->
+<form *ngIf="!isLoading" [formGroup]="basicInfoForm" novalidate>
+
+  <div fxLayout="column" class="input-area" fxLayoutAlign="space-around space-around" fxLayoutGap="5px">
+    <!-- Applicant name -->
+    <!-- Create Account Page -->
+    <ng-container [ngSwitch]="wid">
+      <div *ngSwitchCase="1" fxLayout="column" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+        <mat-icon class="material-icons" style="width:50px;" color="warn" [class.deactive]="isReadOnly" matTooltip="Applicant">person</mat-icon>
+        <mat-form-field class="sname-width">
+          <input matInput id="fname" formControlName="fname" placeholder="First name" maxlength="25" size="30" [required]="!isReadOnly">
+          <mat-error *ngIf="basicInfoForm.controls['fname'].hasError('required')">First name is required</mat-error>
+          <mat-error *ngIf="basicInfoForm.controls['fname'].hasError('pattern')">alphanumeric characters and hyphens(-)</mat-error>
+        </mat-form-field>
+        <mat-form-field class="sname-width">
+          <input matInput formControlName="mname" placeholder="Middle name(optional)" maxlength="25"  size="30">
+          <mat-error *ngIf="basicInfoForm.controls['mname'].hasError('pattern')">alphanumeric characters and hyphens(-)</mat-error>
+        </mat-form-field>
+        <mat-form-field class="sname-width">
+          <input matInput id="lname" formControlName="lname" placeholder="Last name" maxlength="25" size="30" [required]="!isReadOnly">
+          <mat-error *ngIf="basicInfoForm.controls['lname'].hasError('required')">Last name is required</mat-error>
+          <mat-error *ngIf="basicInfoForm.controls['lname'].hasError('pattern')">alphanumeric characters and hyphens(-)</mat-error>
+        </mat-form-field>
+      </div>
+      <!-- Change Permisiion Page & Deactivate Account Page -->
+      <div *ngSwitchDefault fxLayout="row" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+          <mat-icon class="material-icons" style="width:50px;" color="warn" [class.deactive]="isReadOnly" matTooltip="Applicant">person</mat-icon>
+          <mat-form-field class="full-width">
+            <input type="text" name="accountName" formControlName="accountName" placeholder="Applicant name" matInput  [readonly]="isReadOnly"  [required]="!isReadOnly">
+           <!--
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let applicant of filteredApplicant | async" [value]="applicant"  (onSelectionChange)="onSelectApplicant($event, applicant)">
+                {{applicant.display_name}}
+              </mat-option>
+            </mat-autocomplete>
+            -->
+            <mat-error *ngIf="basicInfoForm.controls['accountName'].hasError('required')">Account name is required</mat-error>
+            <mat-error *ngIf="!basicInfoForm.controls['accountName'].hasError('required') && basicInfoForm.controls['accountName'].hasError('userNotFound')">This account does not exists</mat-error>
+
+          </mat-form-field>
+      </div>
+    </ng-container>
+    <!-- Applicant division information -->
+    <div fxLayout="column" fxLayoutAlign="flex-start">
+      <mat-icon class="material-icons" style="width:50px;" color="warn" [class.deactive]="isReadOnly" matTooltip="Division">location_city</mat-icon>
+      <!-- Branch -->
+      <mat-form-field *ngIf="!isReadOnly" style="padding-right: 10px;">
+        <mat-select placeholder="Branches" #branclist formControlName="branch" [required]="!isReadOnly">
+          <mat-option *ngFor="let branch of branches" (onSelectionChange)="onSelectOffice(branch)" [value]="branch.name">
+            {{branch.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="branclist.errorState && basicInfoForm.controls['branch'].hasError('required')">
+          Branch is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="isReadOnly" style="padding-right: 10px;">
+        <input matInput formControlName="branch" placeholder="Branch" [readonly]="isReadOnly">
+      </mat-form-field>
+      <!-- Division Name -->
+      <mat-form-field *ngIf="!isReadOnly" class="full-width">
+        <input matInput placeholder="Division" aria-label="Division" formControlName="divName" [readonly]="isReadOnly" [required]="!isReadOnly">
+        <!--
+                 <mat-autocomplete #itemsAutocomplete="matAutocomplete" [displayWith]="displayDivFn">
+                   <mat-option *ngFor="let div of filteredDivisions | async" [value]="div">
+                     {{div.name}}
+                   </mat-option>
+                 </mat-autocomplete>
+       -->
+        <mat-error *ngIf="basicInfoForm.controls['divName'].hasError('required')">Division is required</mat-error>
+        <mat-error *ngIf="basicInfoForm.controls['divName'].hasError('pattern')">alphanumeric characters and hyphens(-)</mat-error>
+        <mat-error *ngIf="!basicInfoForm.controls['divName'].hasError('required') && basicInfoForm.controls['divName'].hasError('divNotFound')">This division does not exists</mat-error>
+
+      </mat-form-field>
+      <mat-form-field *ngIf="isReadOnly" class="full-width">
+        <input matInput formControlName="divName" placeholder="Division" [readonly]="isReadOnly">
+      </mat-form-field>
+    </div>
+    <!-- Manager Information -->
+    <div fxLayout="column" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+        <mat-icon class="material-icons" style="width:50px;" color="warn" [class.deactive]="isReadOnly" matTooltip="Approval manager">how_to_reg</mat-icon>
+        <mat-form-field *ngIf="!isReadOnly"  class="name-width">
+            <input type="text" name="managerName" formControlName="managerName" placeholder="Approval manager name" matInput maxlength="75" [readonly]="isReadOnly" [required]="!isReadOnly">
+            <!--
+                      <mat-autocomplete #mnagerlist="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let manager of filteredManager | async" [value]="manager">
+                          {{manager.display_name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                      -->
+            <mat-error *ngIf="basicInfoForm.controls['managerName'].hasError('required')">Manager name is required</mat-error>
+            <mat-error *ngIf="!basicInfoForm.controls['managerName'].hasError('required') && basicInfoForm.controls['managerName'].hasError('userNotFound')">This account does not exists</mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="isReadOnly" class="full-width">
+          <input matInput name="managerName" formControlName="managerName" placeholder="Approval manager name" [readonly]="isReadOnly">
+        </mat-form-field>
+      </div>
+    <!-- Date of dismissal -->
+    <ng-container *ngIf="wid === '3'">
+      <div fxLayout="column" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+        <mat-icon class="material-icons" style="width:50px;" color="warn" [class.deactive]="executer !== '1'" matTooltip="Date of dismissal">person_add_disabled</mat-icon>
+        <ng-container [ngSwitch]="executer">
+          <mat-form-field *ngSwitchCase="1" color="primary">
+              <input name="dod" matInput [min]="minDate" formControlName="dod" class="read-only-date" [matDatepicker]="picker" placeholder="Date of dismissal" [required]="!isReadOnly" readonly="true">
+              <mat-datepicker-toggle class="active" matSuffix [for]="picker">
+                <mat-icon matDatepickerToggleIcon color="primary">today</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker disabled="false"></mat-datepicker>
+              <mat-error *ngIf="!isReadOnly && basicInfoForm.controls['dod'].hasError('required')">Date of dismissal is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngSwitchDefault>
+            <input matInput [readonly]="isReadOnly" name="dod" formControlName="dod" [matDatepicker]="" placeholder="Date of dismissal" [required]="!isReadOnly">
+          </mat-form-field>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</form>
+

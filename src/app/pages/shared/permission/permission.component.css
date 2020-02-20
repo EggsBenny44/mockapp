@@ -1,0 +1,14 @@
+.permission {
+  padding-left: 5%;
+  color: #777777;
+}
+
+.read-only {
+  /*
+  font-size: 1em;
+  line-height: 24px;
+  font-family: 'Quicksand', sans-serif;
+  */
+  pointer-events: none;
+  color: grey;
+}

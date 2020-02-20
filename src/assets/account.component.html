@@ -1,0 +1,146 @@
+<!-- Title: Basic Information -->
+<form *ngIf="!isLoading" [formGroup]="basicInfoForm" novalidate>
+  <div class="sub-title"><ul><li>Basic Information</li></ul></div>
+
+
+  <div fxLayout="column" class="input-area" fxLayoutAlign="space-around space-around" fxLayoutGap="2px">
+    <!-- Applicant name -->
+    <!-- Create Account Page -->
+    <ng-container [ngSwitch]="wid">
+
+      <div *ngSwitchCase="1" fxLayout="row" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+        <div fxFlex="8%" fxLayoutAlign="center center">
+          <mat-icon class="material-icons" [class.deactive]="isReadOnly" matTooltip="Applicant">person</mat-icon>
+        </div>
+        <mat-form-field class="sname-width">
+          <input matInput id="fname" formControlName="fname" placeholder="First name" maxlength="25" size="30" [readonly]="isReadOnly" [required]="!isReadOnly">
+          <mat-error *ngIf="basicInfoForm.controls['fname'].hasError('required')">First name is required</mat-error>
+          <mat-error *ngIf="basicInfoForm.controls['fname'].hasError('pattern')">alphanumeric characters and hyphens(-)</mat-error>
+        </mat-form-field>
+        <mat-form-field class="sname-width">
+          <input matInput formControlName="mname" placeholder="Middle name(optional)" maxlength="25"  size="30" [readonly]="isReadOnly">
+          <mat-error *ngIf="basicInfoForm.controls['mname'].hasError('pattern')">alphanumeric characters and hyphens(-)</mat-error>
+        </mat-form-field>
+        <mat-form-field class="sname-width">
+          <input matInput id="lname" formControlName="lname" placeholder="Last name" maxlength="25" size="30" [readonly]="isReadOnly" [required]="!isReadOnly">
+          <mat-error *ngIf="basicInfoForm.controls['lname'].hasError('required')">Last name is required</mat-error>
+          <mat-error *ngIf="basicInfoForm.controls['lname'].hasError('pattern')">alphanumeric characters and hyphens(-)</mat-error>
+        </mat-form-field>
+      </div>
+
+    <!-- Change Permisiion Page & Deactivate Account Page -->
+      <div *ngSwitchCase="2" fxLayout="row" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+        <div fxFlex="8%" fxLayoutAlign="center center">
+          <mat-icon class="material-icons" [class.deactive]="isReadOnly" matTooltip="Applicant">person</mat-icon>
+        </div>
+        <div *ngIf="isReadOnly" fxFlex fxFlexFill>
+          <mat-form-field *ngIf="isReadOnly" class="full-width">
+            <input type="text" formControlName="accountName" placeholder="Account name" matInput  [readonly]="isReadOnly">
+          </mat-form-field>
+        </div>
+        <div *ngIf="!isReadOnly" fxFlex fxFlexFill>
+          <mat-form-field class="full-width">
+            <input type="text" formControlName="accountName" placeholder="Applicant name" matInput  [readonly]="isReadOnly"  [required]="!isReadOnly">
+           <!--
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let applicant of filteredApplicant | async" [value]="applicant"  (onSelectionChange)="onSelectApplicant($event, applicant)">
+                {{applicant.display_name}}
+              </mat-option>
+            </mat-autocomplete>
+            -->
+            <mat-error *ngIf="basicInfoForm.controls['accountName'].hasError('required')">Account name is required</mat-error>
+            <mat-error *ngIf="!basicInfoForm.controls['accountName'].hasError('required') && basicInfoForm.controls['accountName'].hasError('userNotFound')">This account does not exists</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Applicant division information -->
+    <div fxLayout="row" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+      <div fxFlex="8%" fxLayoutAlign="center center" height="30px">
+        <mat-icon class="material-icons" [class.deactive]="isReadOnly" matTooltip="Division">location_city</mat-icon>
+      </div>
+      <!-- Office -->
+      <mat-form-field *ngIf="!isReadOnly">
+        <mat-select placeholder="Office" #officelist formControlName="office" [required]="!isReadOnly">
+          <mat-option *ngFor="let o of branches" (onSelectionChange)="onSelectOffice(o)" [value]="o.name">
+            {{o.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="officelist.errorState && basicInfoForm.controls['office'].hasError('required')">
+          Office is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="isReadOnly">
+        <input matInput formControlName="office" placeholder="Office" [readonly]="isReadOnly">
+      </mat-form-field>
+      <!-- Division Name -->
+      <div fxFlex *ngIf="!isReadOnly" fxFlexFill>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Division" aria-label="Division" formControlName="divName" [readonly]="isReadOnly" [required]="!isReadOnly">
+ <!--
+          <mat-autocomplete #itemsAutocomplete="matAutocomplete" [displayWith]="displayDivFn">
+            <mat-option *ngFor="let div of filteredDivisions | async" [value]="div">
+              {{div.name}}
+            </mat-option>
+          </mat-autocomplete>
+-->
+          <mat-error *ngIf="basicInfoForm.controls['divName'].hasError('required')">Division is required</mat-error>
+          <mat-error *ngIf="basicInfoForm.controls['divName'].hasError('pattern')">alphanumeric characters and hyphens(-)</mat-error>
+          <mat-error *ngIf="!basicInfoForm.controls['divName'].hasError('required') && basicInfoForm.controls['divName'].hasError('divNotFound')">This division does not exists</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex *ngIf="isReadOnly" fxFlexFill>
+        <mat-form-field class="full-width">
+          <input matInput formControlName="divName" placeholder="Division" [readonly]="isReadOnly">
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Manager Information -->
+    <div fxLayout="row" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+      <div fxFlex="8%" fxLayoutAlign="center center" height="30px">
+        <mat-icon class="material-icons" [class.deactive]="isReadOnly" matTooltip="Approval manager">how_to_reg</mat-icon>
+      </div>
+      <div fxFlex  *ngIf="!isReadOnly" fxFlexFill>
+        <mat-form-field class="name-width">
+          <input type="text" id="managerName" formControlName="managerName" placeholder="Approval manager name" matInput maxlength="75" [readonly]="isReadOnly" [required]="!isReadOnly">
+<!--
+          <mat-autocomplete #mnagerlist="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let manager of filteredManager | async" [value]="manager">
+              {{manager.display_name}}
+            </mat-option>
+          </mat-autocomplete>
+          -->
+          <mat-error *ngIf="basicInfoForm.controls['managerName'].hasError('required')">Manager name is required</mat-error>
+          <mat-error *ngIf="!basicInfoForm.controls['managerName'].hasError('required') && basicInfoForm.controls['managerName'].hasError('userNotFound')">This account does not exists</mat-error>            </mat-form-field>
+      </div>
+      <div fxFlex *ngIf="isReadOnly" fxFlexFill>
+        <mat-form-field class="name-width">
+          <input matInput formControlName="managerName" placeholder="Approval manager name" [readonly]="isReadOnly">
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Date of dismissal -->
+    <ng-container *ngIf="wid === '3'">
+      <div fxLayout="row" fxLayoutAlign="flex-start" fxLayoutGap="25px">
+        <div fxFlex="8%" fxLayoutAlign="center center" height="30px">
+          <mat-icon class="material-icons" [class.deactive]="isReadOnly" matTooltip="Date of dismissal">person_add_disabled</mat-icon>
+        </div>
+        <div fxFlex >
+
+          <mat-form-field  color="primary" *ngIf="!isReadOnly">
+            <input matInput [min]="minDate" formControlName="dod" class="read-only-date" [matDatepicker]="picker" placeholder="Date of dismissal" [required]="!isReadOnly" readonly="true">
+            <mat-datepicker-toggle class="active" matSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon color="primary">today</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
+            <mat-error *ngIf="!isReadOnly && basicInfoForm.controls['dod'].hasError('required')">Date of dismissal is required</mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="isReadOnly">
+            <input matInput [readonly]="isReadOnly" formControlName="dod" [matDatepicker]="" placeholder="Date of dismissal" [required]="!isReadOnly">
+          </mat-form-field>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</form>
+

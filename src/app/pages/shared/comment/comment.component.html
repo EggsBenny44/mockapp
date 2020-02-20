@@ -1,0 +1,16 @@
+<!-- Title -->
+<form *ngIf="!isLoading" [formGroup]="commentForm" novalidate>
+  <div class="sub-title"><ul><li>{{subtitle}}</li></ul></div>
+  <div fxLayout="column" fxLayoutAlign="space-around space-around" fxLayoutGap="2px">
+    <!-- Comment-->
+      <div fxFlex fxLayoutAlign="flex-start center">
+        <mat-icon class="material-icons" style="width: 50px;" color="warn" [class.deactive]="isReadOnly" matTooltip="Comment">comment</mat-icon>
+        <mat-form-field class="full-width">
+          <textarea matInput id="comment" formControlName="comment" #message maxlength="150" placeholder="Comment" [readonly]="isReadOnly" [required]="!isReadOnly"></textarea>
+          <mat-hint align="end">{{message.value.length}} / 150</mat-hint>
+          <mat-error *ngIf="!isReadOnly && commentForm.controls['comment'].hasError('required')">Comment is required</mat-error>
+          <mat-error *ngIf="!isReadOnly && commentForm.controls['comment'].hasError('removeSpaces')">Please enter the comment</mat-error>
+        </mat-form-field>
+      </div>
+  </div>
+</form>

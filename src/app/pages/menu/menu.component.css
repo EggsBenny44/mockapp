@@ -1,0 +1,56 @@
+.application-form {
+  align-self: center;
+}
+
+.contents {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+  width: 100%;
+}
+
+.wf-name {
+  background: #ffffff url('../../../assets/img/apply.png') no-repeat;
+  margin: 20px 0px 0px 30px;
+  padding-left:40px;
+  height: 30px;
+  color: #555;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  position: relative;
+
+}
+
+.workflow-list {
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  padding-top: 20px;
+  position: relative;
+  align-content: center;
+  justify-items: center;
+}
+
+.workflow-list table{
+  border-collapse: separate;
+  border-spacing: 0px 5px;
+  margin: 0 auto;
+  width: 80%;
+}
+.workflow-list td,th{
+  padding: 10px;
+}
+.workflow-list th{
+  background: #10a0e0;
+  color: #fff;
+}
+.workflow-list td{
+  background: #f1fafe;
+}
+
+.img-column{
+  text-align: center;
+  width: 7%;
+}

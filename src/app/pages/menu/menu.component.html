@@ -1,0 +1,46 @@
+<!--
+<div class="application-form">
+  <div class="wf-name">WORKFLOW APPLICATION</div>
+  <div class="workflow-list">
+    <table>
+      <tr *ngFor="let menuItem of menuItems; let i = index">
+        <td class="img-column">
+          <a href="/" >
+            <img
+              *ngIf="menuItem === menuItems[0]"
+              src="../../../assets/img/create_account.png"
+            />
+            <img
+              *ngIf="menuItem === menuItems[1]"
+              src="../../../assets/img/change_permission.png"
+            />
+            <img
+              *ngIf="menuItem === menuItems[2]"
+              src="../../../assets/img/deactivate_account.png"
+            />
+          </a>
+        </td>
+        <td>{{ menuItem.title }}</td>
+        <td>{{ menuItem.description }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+-->
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>person_add</mat-icon>
+    <span>Create Account</span>
+  </button>
+  <button mat-menu-item disabled>
+    <mat-icon>how_to_reg</mat-icon>
+    <span>Change Permission</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>person_outline</mat-icon>
+    <span>Deactivate Account</span>
+  </button>
+</mat-menu>

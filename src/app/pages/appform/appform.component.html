@@ -1,0 +1,32 @@
+<form novalidate *ngIf="!isLoading" [formGroup]="applicationForm"  (ngSubmit)="apply(applicationForm.value)" novalidate>
+<div class="contents">
+  <div class="title">
+    <ng-container [ngSwitch]="wid">
+      <mat-icon class="title-icon" *ngSwitchCase="1">person_add</mat-icon>
+      <mat-icon class="title-icon" *ngSwitchCase="2">how_to_reg</mat-icon>
+      <mat-icon class="title-icon" *ngSwitchCase="3">person_outline</mat-icon>
+    </ng-container>
+
+    <h1>{{title}}</h1>
+  </div>
+  <div class="priority">
+    <app-priority [wid]="wid" [executer]="executer" (event)="formInitialized('priorityForm', $event)"></app-priority>
+  </div>
+  <div class="account">
+    <app-account [wid]="wid" [executer]="executer" (event)="formInitialized('basicInfoForm', $event)"></app-account>
+  </div>
+  <ng-container *ngIf="wid !== '3'">
+    <div class="permission">
+      <app-permission [wid]="wid" [executer]="executer" (event)="formInitialized('permissionForm', $event)"></app-permission>
+    </div>
+  </ng-container>
+  <div class="comment">
+    <app-comment [wid]="wid" [executer]="executer" [type]="1" (event)="formInitialized('commentForm', $event)"></app-comment>
+  </div>
+  <div class="submission">
+    <button type="submit" mat-raised-button color="primary" style="width:200px;" [disabled]="applicationForm.invalid">Apply</button>
+  </div>
+</div>
+
+
+</form>
