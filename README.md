@@ -1,7 +1,7 @@
-# mockapp
-angular9.0.2 mock
+# Name
+angular9.0.2 mock app
 
-# demo
+# Demo
 https://demo.eggs-benny.com
 
 # Features
